@@ -4,9 +4,11 @@
  * Supports Premium Whitish Light Mode (Default) and Cyber Dark Mode.
  */
 
-const API_BASE = (window.location.protocol && window.location.protocol.startsWith('http'))
-  ? window.location.origin + '/api'
-  : 'http://localhost:8000/api';
+const API_BASE = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
+  ? 'http://127.0.0.1:8000/api'
+  : (window.location.origin.includes('onrender.com') 
+      ? window.location.origin + '/api' 
+      : 'https://maytech-airindex.onrender.com/api');
 
 let selectedRoute = 'DEL-BOM';
 let isLiveStream = true;
