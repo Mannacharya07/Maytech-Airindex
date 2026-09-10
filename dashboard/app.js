@@ -4,16 +4,18 @@
  * Supports Premium Whitish Light Mode (Default) and Cyber Dark Mode.
  */
 
-const urlParams = typeof window !== 'undefined' ? new URLSearchParams(window.location.search) : null;
-const customApi = urlParams ? (urlParams.get('api') || localStorage.getItem('AIRINDEX_API_URL')) : null;
+const PROD_RENDER_API = 'https://maytech-airindex-8b07.onrender.com/api';
 
-const API_BASE = customApi 
-  ? customApi.replace(/\/$/, '').replace(/\/api$/, '') + '/api'
+const urlParams = typeof window !== 'undefined' ? new URLSearchParams(window.location.search) : null;
+const overrideApi = urlParams ? urlParams.get('api') : null;
+
+const API_BASE = overrideApi
+  ? overrideApi.replace(/\/$/, '').replace(/\/api$/, '') + '/api'
   : ((window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
       ? 'http://127.0.0.1:8000/api'
-      : (window.location.origin.includes('onrender.com') 
-          ? window.location.origin + '/api' 
-          : 'https://maytech-airindex-8b07.onrender.com/api'));
+      : PROD_RENDER_API);
+
+console.log('[AIRINDEX] Connected to Backend API:', API_BASE);
 
 let selectedRoute = 'DEL-BOM';
 let isLiveStream = true;
