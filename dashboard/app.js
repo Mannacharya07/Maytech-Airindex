@@ -13,7 +13,7 @@ const API_BASE = customApi
       ? 'http://127.0.0.1:8000/api'
       : (window.location.origin.includes('onrender.com') 
           ? window.location.origin + '/api' 
-          : 'https://maytech-airindex.onrender.com/api'));
+          : 'https://maytech-airindex-8b07.onrender.com/api'));
 
 let selectedRoute = 'DEL-BOM';
 let isLiveStream = true;
