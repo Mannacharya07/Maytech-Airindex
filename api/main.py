@@ -57,6 +57,13 @@ def startup_event():
     init_sqlite_db()
     try:
         ingest_replay_csv_to_db()
+        serp_key = os.environ.get("SERPAPI_KEY", "1fb2bd035520daca1aebf66aee88f9d9c021bb3285d879376262cf46bfeedce2")
+        if serp_key:
+            try:
+                from collector.sync_live_serpapi import run_live_serpapi_sync
+                run_live_serpapi_sync(serp_key)
+            except Exception as se:
+                logger.warning("SerpAPI startup sync note: %s", se)
         compute_and_sync_index_values()
     except Exception as exc:
         logger.warning("Startup data sync warning: %s", exc)
