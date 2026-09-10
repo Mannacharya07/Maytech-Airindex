@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AIRINDEX – Real-Time Airfare Policy & Anti-Surge Intelligence Console (SIH26056)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <div class="dashboard-container">
+    
+    <!-- Live Airfare Ticker Tape -->
+    <div class="ticker-banner">
+      <div class="ticker-label">
+        <span class="pulse-dot pulse-red"></span>
+        <span>LIVE HARVEST STREAM</span>
+      </div>
+      <div class="ticker-viewport">
+        <div class="ticker-track" id="ticker-track">
+          <span class="ticker-item">Connecting to real-time airfare ingestion stream...</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Header & Government Console Navbar -->
+    <header class="header-nav">
+      <div class="logo-group">
+        <div class="logo-badge">AIRINDEX</div>
+        <div class="title-group">
+          <h1>National Airfare Policy & Anti-Surge Intelligence System</h1>
+          <p>Ministry of Statistics & Programme Implementation (MoSPI) / DGCA Policy Console (SIH26056)</p>
+        </div>
+      </div>
+
+      <div class="header-status">
+        <!-- Live Streaming Auto-Sync Switch -->
+        <div class="toggle-control" title="Toggle automatic 3-second live data streaming">
+          <label class="switch">
+            <input type="checkbox" id="toggle-live-stream" checked onchange="toggleLiveStream(this.checked)">
+            <span class="slider round"></span>
+          </label>
+          <span class="toggle-label" id="stream-status-label">
+            <span class="pulse-dot"></span> LIVE AUTO-STREAM (3s)
+          </span>
+        </div>
+
+        <!-- Ingest Live Tick Button -->
+        <button id="btn-ingest-tick" class="btn-tick" onclick="triggerLiveTick()">
+          <span class="btn-icon">⚡</span> Ingest Live Tick
+        </button>
+
+        <button id="btn-export-report" class="btn-tick" style="background: linear-gradient(135deg, #10b981, #059669);" onclick="exportExecutiveReport()">
+          <span class="btn-icon">📑</span> MoSPI Executive Audit Report
+        </button>
+
+        <button id="btn-refresh" class="btn-refresh" onclick="refreshDashboardData()">
+          Sync DB
+        </button>
+
+        <!-- Premium Whitish & Dark Mode Toggle -->
+        <button id="btn-theme-toggle" class="btn-theme" onclick="toggleTheme()" title="Toggle Light/Dark Theme">
+          <span id="theme-icon">🌙</span>
+          <span id="theme-text">Dark</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- Route Filter Pill Bar -->
+    <div class="filter-bar-container">
+      <span class="filter-bar-label">SELECT BASKET ROUTE:</span>
+      <div class="route-pills" id="route-pills">
+        <button class="pill-btn active" onclick="selectRoute('DEL-BOM')">DEL-BOM (Delhi ⇄ Mumbai)</button>
+        <button class="pill-btn" onclick="selectRoute('DEL-BLR')">DEL-BLR (Delhi ⇄ Bengaluru)</button>
+        <button class="pill-btn" onclick="selectRoute('BOM-BLR')">BOM-BLR (Mumbai ⇄ Bengaluru)</button>
+        <button class="pill-btn" onclick="selectRoute('DEL-CCU')">DEL-CCU (Delhi ⇄ Kolkata)</button>
+        <button class="pill-btn" onclick="selectRoute('BLR-HYD')">BLR-HYD (Bengaluru ⇄ Hyderabad)</button>
+        <button class="pill-btn" onclick="selectRoute('MAA-DEL')">MAA-DEL (Chennai ⇄ Delhi)</button>
+      </div>
+    </div>
+
+    <!-- Key Metrics KPI Grid -->
+    <section class="metrics-grid">
+      <div class="metric-card" id="card-national-index">
+        <div class="metric-label">National Airfare Index (Jevons)</div>
+        <div class="metric-value" id="val-national-index">100.00</div>
+        <div class="metric-sub" id="sub-national-change">0.00% vs Base (100.00)</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">Active Route Focus</div>
+        <div class="metric-value text-cyan" id="val-active-route">DEL-BOM</div>
+        <div class="metric-sub" id="val-route-weight">Traffic Weight: 28% (DGCA)</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">Advance Booking Windows</div>
+        <div class="metric-value">5 Windows</div>
+        <div class="metric-sub">T+1, T+7, T+15, T+30, T+45 Days</div>
+      </div>
+      <div class="metric-card" id="card-total-obs">
+        <div class="metric-label">Total Observations Harvested</div>
+        <div class="metric-value" id="val-total-obs">14,400</div>
+        <div class="metric-sub" id="val-latest-timestamp">Multi-Source Web + Replay Feed</div>
+      </div>
+    </section>
+
+    <!-- Section 1: Trend Chart & Route Basket Cards -->
+    <div class="grid-2col">
+      <div class="glass-panel">
+        <div class="panel-header">
+          <div>
+            <div class="panel-title" id="trend-chart-title">30-Day Airfare Index Trend (NATIONAL)</div>
+            <span class="metric-sub">Geometric Mean Relative Index Aggregation</span>
+          </div>
+          <div class="badge-tag">Jevons Axiomatic Series</div>
+        </div>
+        <div class="chart-container">
+          <canvas id="chart-index-trend"></canvas>
+        </div>
+      </div>
+
+      <div class="glass-panel">
+        <div class="panel-header">
+          <div>
+            <div class="panel-title">DGCA Representative Route Basket</div>
+            <span class="metric-sub">Click any card to inspect route & surge profile</span>
+          </div>
+        </div>
+        <div class="routes-grid" id="routes-container">
+          <!-- Dynamically populated route cards -->
+        </div>
+      </div>
+    </div>
+
+    <!-- Section 2: Lead-Time Surge Curve & Driver Contributions -->
+    <div class="grid-2col">
+      <div class="glass-panel">
+        <div class="panel-header">
+          <div>
+            <div class="panel-title" id="lead-time-title">Lead-Time Price Surge Curve (DEL-BOM)</div>
+            <span class="metric-sub">Dynamic Pricing Escalation: T+45 Days → T+1 Day</span>
+          </div>
+          <div class="badge-tag" id="lead-time-surge-rate">Surge Rate: +78%</div>
+        </div>
+        <div class="chart-container">
+          <canvas id="chart-lead-time"></canvas>
+        </div>
+      </div>
+
+      <div class="glass-panel">
+        <div class="panel-header">
+          <div>
+            <div class="panel-title">Why Did The Index Move? (Driver Decomposition)</div>
+            <span class="metric-sub">Route-Level Share & Movement Contribution Points</span>
+          </div>
+        </div>
+        <div class="table-responsive">
+          <table>
+            <thead>
+              <tr>
+                <th>Route</th>
+                <th>DGCA Share</th>
+                <th>Current Index</th>
+                <th>Contribution Δ</th>
+              </tr>
+            </thead>
+            <tbody id="table-contributors">
+              <!-- Dynamically populated contributors -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- Real-Time MakeMyTrip Live 1:1 Price Verification Console -->
+    <section class="glass-panel live-verification-panel">
+      <div class="panel-header">
+        <div>
+          <div class="panel-title text-cyan">
+            <span class="pulse-dot pulse-red"></span> REAL-TIME MAKEMYTRIP LIVE PRICE VERIFICATION CONSOLE
+          </div>
+          <span class="metric-sub">Real-time harvested ticket prices directly captured from MakeMyTrip search engine</span>
+        </div>
+        <div class="header-status">
+          <button class="btn-tick" onclick="triggerLiveTick()">
+            ⚡ Harvest Live MMT Fares Now
+          </button>
+        </div>
+      </div>
+      <div class="table-responsive">
+        <table>
+          <thead>
+            <tr>
+              <th>Travel Date</th>
+              <th>Route</th>
+              <th>Carrier</th>
+              <th>Window</th>
+              <th>Live Total Fare</th>
+              <th>DGCA Base / Tax Breakdown</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody id="table-mmt-live-match">
+            <tr>
+              <td style="font-weight: 700; color: var(--text-main);">2026-09-11</td>
+              <td style="font-weight: 800; color: var(--text-cyan);">DEL ⇄ BOM (6E 6814)</td>
+              <td><span class="badge-carrier-indigo">INDIGO</span></td>
+              <td><span class="badge-tag">T+1</span></td>
+              <td style="font-weight: 900; font-size: 1.15rem; color: #10b981;">₹6,499</td>
+              <td style="font-size: 0.85rem; color: var(--text-muted);">Base: ₹5,065.00 | Tax+Fees: ₹1,434.00</td>
+              <td><span class="badge-live-tag">LIVE</span></td>
+            </tr>
+            <tr>
+              <td style="font-weight: 700; color: var(--text-main);">2026-09-26</td>
+              <td style="font-weight: 800; color: var(--text-cyan);">DEL ⇄ BLR (AI 2409)</td>
+              <td><span class="badge-carrier-airindia">AIR INDIA</span></td>
+              <td><span class="badge-tag">T+15</span></td>
+              <td style="font-weight: 900; font-size: 1.15rem; color: #10b981;">₹9,300</td>
+              <td style="font-size: 0.85rem; color: var(--text-muted);">Base: ₹7,600.00 | Tax+Fees: ₹1,700.00</td>
+              <td><span class="badge-live-tag">LIVE</span></td>
+            </tr>
+            <tr>
+              <td style="font-weight: 700; color: var(--text-main);">2026-09-17</td>
+              <td style="font-weight: 800; color: var(--text-cyan);">BOM ⇄ BLR</td>
+              <td><span class="badge-carrier-indigo">INDIGO</span></td>
+              <td><span class="badge-tag">T+7</span></td>
+              <td style="font-weight: 900; font-size: 1.1rem; color: #10b981;">₹4,250</td>
+              <td style="font-size: 0.85rem; color: var(--text-muted);">Base: ₹3,485.00 | Tax+Fees: ₹765.00</td>
+              <td><span class="badge-live-tag">LIVE</span></td>
+            </tr>
+            <tr>
+              <td style="font-weight: 700; color: var(--text-main);">2026-09-25</td>
+              <td style="font-weight: 800; color: var(--text-cyan);">BLR ⇄ HYD</td>
+              <td><span class="badge-carrier-airindia">AIR INDIA</span></td>
+              <td><span class="badge-tag">T+15</span></td>
+              <td style="font-weight: 900; font-size: 1.1rem; color: #10b981;">₹3,020</td>
+              <td style="font-size: 0.85rem; color: var(--text-muted);">Base: ₹2,476.40 | Tax+Fees: ₹543.60</td>
+              <td><span class="badge-live-tag">LIVE</span></td>
+            </tr>
+            <tr>
+              <td style="font-weight: 700; color: var(--text-main);">2026-10-10</td>
+              <td style="font-weight: 800; color: var(--text-cyan);">MAA ⇄ DEL</td>
+              <td><span class="badge-carrier-indigo">INDIGO</span></td>
+              <td><span class="badge-tag">T+30</span></td>
+              <td style="font-weight: 900; font-size: 1.1rem; color: #10b981;">₹5,490</td>
+              <td style="font-size: 0.85rem; color: var(--text-muted);">Base: ₹4,500.00 | Tax+Fees: ₹990.00</td>
+              <td><span class="badge-live-tag">LIVE</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Section 3: Real-Time Incoming Flight Observation Feed -->
+    <section class="glass-panel">
+      <div class="panel-header">
+        <div>
+          <div class="panel-title">
+            <span class="pulse-dot"></span> Real-Time Flight Ingestion Stream
+          </div>
+          <span class="metric-sub">Live incoming ticket records entering the canonical measurement layer</span>
+        </div>
+        <div class="provenance-badges-group">
+          <span class="badge-live-tag">LIVE</span>
+          <span class="badge-replay-tag">REPLAY</span>
+          <span class="badge-synthetic-tag">SYNTHETIC</span>
+        </div>
+      </div>
+      <div class="table-responsive">
+        <table>
+          <thead>
+            <tr>
+              <th>Observed At</th>
+              <th>Route</th>
+              <th>Carrier</th>
+              <th>Window</th>
+              <th>Travel Date</th>
+              <th>Base Fare</th>
+              <th>Taxes & Fees</th>
+              <th>Total Fare</th>
+              <th>Provenance</th>
+            </tr>
+          </thead>
+          <tbody id="table-recent-fares">
+            <tr>
+              <td style="color: var(--text-muted);">01:13:00</td>
+              <td style="font-weight: 800; color: var(--text-main);">DEL ⇄ BOM (6E 6814)</td>
+              <td><span class="badge-carrier-indigo">INDIGO</span></td>
+              <td style="font-weight: 700; color: var(--accent-rose);">T+1</td>
+              <td style="color: var(--text-muted);">2026-09-11</td>
+              <td>₹5,065.00</td>
+              <td style="color: var(--text-muted);">₹1,434.00</td>
+              <td style="font-weight: 800; color: var(--accent-primary);">₹6,499</td>
+              <td><span class="badge-live-tag">LIVE</span></td>
+            </tr>
+            <tr>
+              <td style="color: var(--text-muted);">12:59:00</td>
+              <td style="font-weight: 800; color: var(--text-main);">DEL ⇄ BLR</td>
+              <td><span class="badge-carrier-airindia">AIR INDIA</span></td>
+              <td style="font-weight: 700; color: var(--accent-primary);">T+15</td>
+              <td style="color: var(--text-muted);">2026-09-25</td>
+              <td>₹4,059.00</td>
+              <td style="color: var(--text-muted);">₹891.00</td>
+              <td style="font-weight: 800; color: var(--accent-primary);">₹4,950</td>
+              <td><span class="badge-live-tag">LIVE</span></td>
+            </tr>
+            <tr>
+              <td style="color: var(--text-muted);">12:59:00</td>
+              <td style="font-weight: 800; color: var(--text-main);">BOM ⇄ BLR</td>
+              <td><span class="badge-carrier-indigo">INDIGO</span></td>
+              <td style="font-weight: 700; color: var(--accent-primary);">T+7</td>
+              <td style="color: var(--text-muted);">2026-09-17</td>
+              <td>₹3,485.00</td>
+              <td style="color: var(--text-muted);">₹765.00</td>
+              <td style="font-weight: 800; color: var(--accent-primary);">₹4,250</td>
+              <td><span class="badge-live-tag">LIVE</span></td>
+            </tr>
+            <tr>
+              <td style="color: var(--text-muted);">12:59:00</td>
+              <td style="font-weight: 800; color: var(--text-main);">BLR ⇄ HYD</td>
+              <td><span class="badge-carrier-airindia">AIR INDIA</span></td>
+              <td style="font-weight: 700; color: var(--accent-primary);">T+15</td>
+              <td style="color: var(--text-muted);">2026-09-25</td>
+              <td>₹2,476.40</td>
+              <td style="color: var(--text-muted);">₹543.60</td>
+              <td style="font-weight: 800; color: var(--accent-primary);">₹3,020</td>
+              <td><span class="badge-live-tag">LIVE</span></td>
+            </tr>
+            <tr>
+              <td style="color: var(--text-muted);">12:59:00</td>
+              <td style="font-weight: 800; color: var(--text-main);">MAA ⇄ DEL</td>
+              <td><span class="badge-carrier-indigo">INDIGO</span></td>
+              <td style="font-weight: 700; color: var(--accent-primary);">T+30</td>
+              <td style="color: var(--text-muted);">2026-10-10</td>
+              <td>₹4,500.00</td>
+              <td style="color: var(--text-muted);">₹990.00</td>
+              <td style="font-weight: 800; color: var(--accent-primary);">₹5,490</td>
+              <td><span class="badge-live-tag">LIVE</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Section 4: Anti-Surge Anomaly Intelligence Table -->
+    <section class="glass-panel">
+      <div class="panel-header">
+        <div>
+          <div class="panel-title" id="anomaly-table-title">Anti-Surge Anomaly Intelligence (Consumer Protection Alerts)</div>
+          <span class="metric-sub">Robust Median Absolute Deviation (MAD) & Z-Score Surge Detector</span>
+        </div>
+        <div class="anomaly-filter-tabs">
+          <span class="badge-high">HIGH SPIKE (>30%)</span>
+          <span class="badge-medium">MODERATE (15-30%)</span>
+        </div>
+      </div>
+      <div class="table-responsive">
+        <table>
+          <thead>
+            <tr>
+              <th>Route</th>
+              <th>Window</th>
+              <th>Carrier</th>
+              <th>Observed Fare</th>
+              <th>Baseline Fare</th>
+              <th>Spike %</th>
+              <th>Severity</th>
+              <th>Reason & Alert</th>
+            </tr>
+          </thead>
+          <tbody id="table-anomalies">
+            <tr>
+              <td style="font-weight: 800; color: var(--text-main);">DEL-BOM</td>
+              <td style="color: var(--accent-rose); font-weight: 700;">T+1</td>
+              <td>INDIGO</td>
+              <td style="font-weight: 800;">₹7,940</td>
+              <td style="color: var(--text-muted);">₹4,200</td>
+              <td style="font-weight: 800; color: var(--accent-rose);">+89.0%</td>
+              <td><span class="badge-high">HIGH</span></td>
+              <td style="font-size: 0.78rem; color: var(--text-muted);">Last-minute T+1 fare surge of +89.0% over T+45 baseline (Z-Score: 3.8)</td>
+            </tr>
+            <tr>
+              <td style="font-weight: 800; color: var(--text-main);">DEL-BOM</td>
+              <td style="color: var(--accent-rose); font-weight: 700;">T+3</td>
+              <td>AIR INDIA</td>
+              <td style="font-weight: 800;">₹6,850</td>
+              <td style="color: var(--text-muted);">₹4,200</td>
+              <td style="font-weight: 800; color: var(--accent-rose);">+63.1%</td>
+              <td><span class="badge-high">HIGH</span></td>
+              <td style="font-size: 0.78rem; color: var(--text-muted);">High-demand weekend T+3 fare surge over route baseline (Z-Score: 3.2)</td>
+            </tr>
+            <tr>
+              <td style="font-weight: 800; color: var(--text-main);">DEL-BLR</td>
+              <td style="color: var(--accent-primary); font-weight: 700;">T+1</td>
+              <td>INDIGO</td>
+              <td style="font-weight: 800;">₹6,240</td>
+              <td style="color: var(--text-muted);">₹4,100</td>
+              <td style="font-weight: 800; color: var(--accent-rose);">+52.2%</td>
+              <td><span class="badge-medium">MEDIUM</span></td>
+              <td style="font-size: 0.78rem; color: var(--text-muted);">Last-minute T+1 advance window price surge (Z-Score: 2.6)</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Section 5: Official DGCA Validation & Benchmark Accuracy -->
+    <section class="glass-panel">
+      <div class="panel-header">
+        <div>
+          <div class="panel-title">Official DGCA Reference Validation (Back-Test Accuracy)</div>
+          <span class="metric-sub">Rigorous empirical comparison against DGCA reference fare series (Section 45 of Blueprint)</span>
+        </div>
+        <div class="badge-tag">Auditable Metrics</div>
+      </div>
+      <div class="metrics-grid" style="margin-top: 8px;">
+        <div class="metric-card" style="padding: 16px;">
+          <div class="metric-label">Pearson Correlation (r)</div>
+          <div class="metric-value text-cyan" id="val-val-corr">0.951</div>
+          <div class="metric-sub">Strong statistical alignment</div>
+        </div>
+        <div class="metric-card" style="padding: 16px;">
+          <div class="metric-label">Mean Absolute % Error (MAPE)</div>
+          <div class="metric-value text-green" id="val-val-mape">4.72%</div>
+          <div class="metric-sub">High index tracking precision</div>
+        </div>
+        <div class="metric-card" style="padding: 16px;">
+          <div class="metric-label">Root Mean Squared Error (RMSE)</div>
+          <div class="metric-value" id="val-val-rmse">₹188.40</div>
+          <div class="metric-sub">Minimal deviation from baseline</div>
+        </div>
+        <div class="metric-card" style="padding: 16px;">
+          <div class="metric-label">Axiomatic Defensibility</div>
+          <div class="metric-value text-cyan">100%</div>
+          <div class="metric-sub">Jevons Time-Reversal Compliant</div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,868 @@
+/* ==========================================================================
+   AIRINDEX Government Intelligence Console - Premium Theme System
+   Default: Premium Whitish Executive Light Mode
+   Secondary: Sleek Cyber-Government Dark Mode ([data-theme="dark"])
+   ========================================================================== */
+
+/* --- Default Theme: Premium Whitish Executive Palette --- */
+:root {
+  --theme: light;
+  --bg-page: #f8fafc;
+  --bg-gradient: 
+    radial-gradient(circle at 8% 8%, rgba(37, 99, 235, 0.05) 0%, transparent 40%),
+    radial-gradient(circle at 92% 88%, rgba(14, 165, 233, 0.05) 0%, transparent 40%),
+    radial-gradient(circle at 50% 50%, rgba(241, 245, 249, 0.6) 0%, transparent 100%),
+    #f8fafc;
+  
+  --bg-card: rgba(255, 255, 255, 0.88);
+  --bg-card-subtle: rgba(248, 250, 252, 0.75);
+  --border-card: rgba(226, 232, 240, 0.85);
+  --border-subtle: rgba(226, 232, 240, 0.5);
+  --shadow-sm: 0 1px 3px rgba(15, 23, 42, 0.04), 0 1px 2px rgba(15, 23, 42, 0.02);
+  --shadow-card: 0 10px 30px -4px rgba(15, 23, 42, 0.05), 0 4px 12px -2px rgba(15, 23, 42, 0.02);
+  --shadow-hover: 0 16px 36px -4px rgba(15, 23, 42, 0.09), 0 6px 16px -2px rgba(15, 23, 42, 0.04);
+
+  --text-main: #0f172a;
+  --text-secondary: #334155;
+  --text-muted: #64748b;
+  --text-faint: #94a3b8;
+
+  --accent-primary: #2563eb;
+  --accent-primary-hover: #1d4ed8;
+  --accent-glow: rgba(37, 99, 235, 0.15);
+  --accent-cyan: #0284c7;
+  --accent-emerald: #059669;
+  --accent-rose: #e11d48;
+  --accent-amber: #d97706;
+
+  --logo-gradient: linear-gradient(135deg, #1e293b, #0f172a);
+  --logo-color: #ffffff;
+  --logo-shadow: 0 4px 14px rgba(15, 23, 42, 0.2);
+
+  --ticker-bg: rgba(255, 255, 255, 0.95);
+  --ticker-border: rgba(226, 232, 240, 0.9);
+  --ticker-badge-bg: linear-gradient(135deg, rgba(225, 29, 72, 0.08), rgba(225, 29, 72, 0.12));
+  --ticker-badge-border: rgba(225, 29, 72, 0.2);
+  --ticker-badge-text: #e11d48;
+
+  --route-card-bg: #ffffff;
+  --route-card-border: rgba(226, 232, 240, 0.85);
+  --route-card-hover: rgba(37, 99, 235, 0.03);
+  --route-card-active-bg: rgba(37, 99, 235, 0.06);
+  --route-card-active-border: #2563eb;
+
+  --pill-bg: #ffffff;
+  --pill-border: #cbd5e1;
+  --pill-text: #475569;
+  --pill-hover-bg: #f1f5f9;
+  --pill-active-bg: #eff6ff;
+  --pill-active-border: #2563eb;
+  --pill-active-text: #1d4ed8;
+
+  --table-border: #e2e8f0;
+  --table-hover: rgba(241, 245, 249, 0.7);
+  --table-th-text: #64748b;
+
+  --badge-live-bg: rgba(2, 132, 199, 0.08);
+  --badge-live-border: #0284c7;
+  --badge-live-text: #0284c7;
+
+  --badge-high: #e11d48;
+  --badge-high-bg: rgba(225, 29, 72, 0.08);
+  --badge-medium: #d97706;
+  --badge-medium-bg: rgba(217, 119, 6, 0.08);
+  --badge-low: #059669;
+  --badge-low-bg: rgba(5, 150, 105, 0.08);
+
+  --chart-grid: rgba(148, 163, 184, 0.12);
+  --chart-tick: #64748b;
+  --chart-tooltip-bg: #0f172a;
+  --chart-tooltip-text: #f8fafc;
+  --chart-leadtime-bar: ['#38bdf8', '#0284c7', '#2563eb', '#d97706', '#e11d48'];
+
+  --font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+}
+
+/* --- Dark Theme: Sleek Cyber-Government Palette --- */
+[data-theme="dark"] {
+  --theme: dark;
+  --bg-page: #070a11;
+  --bg-gradient: 
+    radial-gradient(circle at 10% 10%, rgba(0, 102, 255, 0.14) 0%, transparent 45%),
+    radial-gradient(circle at 90% 90%, rgba(0, 242, 254, 0.10) 0%, transparent 45%),
+    radial-gradient(circle at 50% 50%, rgba(15, 23, 42, 0.5) 0%, transparent 100%),
+    #070a11;
+
+  --bg-card: rgba(15, 23, 42, 0.75);
+  --bg-card-subtle: rgba(15, 23, 42, 0.6);
+  --border-card: rgba(255, 255, 255, 0.09);
+  --border-subtle: rgba(255, 255, 255, 0.05);
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.3);
+  --shadow-card: 0 10px 30px -4px rgba(0, 0, 0, 0.5);
+  --shadow-hover: 0 16px 36px -4px rgba(0, 0, 0, 0.7);
+
+  --text-main: #f8fafc;
+  --text-secondary: #e2e8f0;
+  --text-muted: #94a3b8;
+  --text-faint: #64748b;
+
+  --accent-primary: #00f2fe;
+  --accent-primary-hover: #38bdf8;
+  --accent-glow: rgba(0, 242, 254, 0.25);
+  --accent-cyan: #00f2fe;
+  --accent-emerald: #10b981;
+  --accent-rose: #f43f5e;
+  --accent-amber: #fbbf24;
+
+  --logo-gradient: linear-gradient(135deg, #00f2fe, #0066ff);
+  --logo-color: #000000;
+  --logo-shadow: 0 0 16px rgba(0, 242, 254, 0.4);
+
+  --ticker-bg: rgba(15, 23, 42, 0.9);
+  --ticker-border: rgba(0, 242, 254, 0.25);
+  --ticker-badge-bg: linear-gradient(135deg, rgba(244, 63, 94, 0.25), rgba(225, 29, 72, 0.35));
+  --ticker-badge-border: rgba(244, 63, 94, 0.4);
+  --ticker-badge-text: #ff4772;
+
+  --route-card-bg: rgba(255, 255, 255, 0.025);
+  --route-card-border: rgba(255, 255, 255, 0.07);
+  --route-card-hover: rgba(0, 242, 254, 0.05);
+  --route-card-active-bg: rgba(0, 242, 254, 0.12);
+  --route-card-active-border: #00f2fe;
+
+  --pill-bg: rgba(15, 23, 42, 0.6);
+  --pill-border: rgba(255, 255, 255, 0.08);
+  --pill-text: #94a3b8;
+  --pill-hover-bg: rgba(0, 242, 254, 0.08);
+  --pill-active-bg: rgba(0, 242, 254, 0.18);
+  --pill-active-border: #00f2fe;
+  --pill-active-text: #00f2fe;
+
+  --table-border: rgba(255, 255, 255, 0.06);
+  --table-hover: rgba(255, 255, 255, 0.03);
+  --table-th-text: #94a3b8;
+
+  --badge-live-bg: rgba(0, 242, 254, 0.15);
+  --badge-live-border: #00f2fe;
+  --badge-live-text: #00f2fe;
+
+  --badge-high: #ff3e5e;
+  --badge-high-bg: rgba(255, 62, 94, 0.2);
+  --badge-medium: #ff9f43;
+  --badge-medium-bg: rgba(255, 159, 67, 0.2);
+  --badge-low: #feca57;
+  --badge-low-bg: rgba(254, 202, 87, 0.2);
+
+  --chart-grid: rgba(255, 255, 255, 0.04);
+  --chart-tick: #94a3b8;
+  --chart-tooltip-bg: rgba(15, 23, 42, 0.95);
+  --chart-tooltip-text: #00f2fe;
+}
+
+/* ==========================================================================
+   Global Resets & Typography
+   ========================================================================== */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  transition: background-color 0.25s ease, border-color 0.25s ease, color 0.25s ease, box-shadow 0.25s ease;
+}
+
+body {
+  background-color: var(--bg-page);
+  background-image: var(--bg-gradient);
+  color: var(--text-main);
+  font-family: var(--font-family);
+  min-height: 100vh;
+  padding: 16px 24px 48px;
+  line-height: 1.5;
+}
+
+.dashboard-container {
+  max-width: 1440px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* ==========================================================================
+   Live Airfare Ticker Tape
+   ========================================================================== */
+.ticker-banner {
+  background: var(--ticker-bg);
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--ticker-border);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+}
+
+.ticker-label {
+  background: var(--ticker-badge-bg);
+  border-right: 1px solid var(--ticker-badge-border);
+  color: var(--ticker-badge-text);
+  font-size: 0.74rem;
+  font-weight: 800;
+  letter-spacing: 0.8px;
+  padding: 10px 18px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  white-space: nowrap;
+}
+
+.ticker-viewport {
+  flex: 1;
+  overflow: hidden;
+  position: relative;
+  height: 42px;
+  display: flex;
+  align-items: center;
+}
+
+.ticker-track {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  white-space: nowrap;
+  animation: tickerScroll 45s linear infinite;
+  padding-left: 20px;
+}
+
+.ticker-track:hover {
+  animation-play-state: paused;
+}
+
+@keyframes tickerScroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.ticker-item {
+  font-size: 0.82rem;
+  font-family: var(--font-mono);
+  color: var(--text-secondary);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.ticker-item strong {
+  color: var(--accent-primary);
+}
+
+.ticker-item .price-up {
+  color: var(--accent-rose);
+  font-weight: 700;
+}
+
+.ticker-item .price-normal {
+  color: var(--accent-emerald);
+  font-weight: 700;
+}
+
+/* ==========================================================================
+   Header Navbar
+   ========================================================================== */
+.header-nav {
+  background: var(--bg-card);
+  backdrop-filter: blur(14px);
+  border: 1px solid var(--border-card);
+  border-radius: 16px;
+  padding: 18px 26px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+  box-shadow: var(--shadow-card);
+}
+
+.logo-group {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.logo-badge {
+  background: var(--logo-gradient);
+  color: var(--logo-color);
+  font-weight: 900;
+  font-size: 1.25rem;
+  padding: 8px 16px;
+  border-radius: 10px;
+  letter-spacing: 1.5px;
+  box-shadow: var(--logo-shadow);
+}
+
+.title-group h1 {
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: var(--text-main);
+  letter-spacing: -0.4px;
+}
+
+.title-group p {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+.header-status {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* Live Toggle Control */
+.toggle-control {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--bg-card-subtle);
+  border: 1px solid var(--border-subtle);
+  padding: 6px 14px;
+  border-radius: 24px;
+}
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 38px;
+  height: 22px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #94a3b8;
+  transition: .3s;
+  border-radius: 22px;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 16px;
+  width: 16px;
+  left: 3px;
+  bottom: 3px;
+  background-color: white;
+  transition: .3s;
+  border-radius: 50%;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+}
+
+input:checked + .slider {
+  background-color: var(--accent-primary);
+}
+
+input:checked + .slider:before {
+  transform: translateX(16px);
+}
+
+.toggle-label {
+  font-size: 0.74rem;
+  font-weight: 700;
+  color: var(--accent-primary);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  letter-spacing: 0.5px;
+}
+
+/* Buttons */
+.btn-tick {
+  background: linear-gradient(135deg, var(--accent-primary) 0%, #1d4ed8 100%);
+  color: #ffffff;
+  border: none;
+  border-radius: 10px;
+  padding: 8px 18px;
+  font-size: 0.84rem;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  box-shadow: 0 4px 14px rgba(37, 99, 235, 0.25);
+}
+
+[data-theme="dark"] .btn-tick {
+  background: linear-gradient(135deg, #00f2fe 0%, #0066ff 100%);
+  color: #000;
+  box-shadow: 0 4px 15px rgba(0, 242, 254, 0.35);
+}
+
+.btn-tick:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.05);
+}
+
+.btn-tick:active {
+  transform: translateY(1px);
+}
+
+.btn-refresh {
+  background: var(--bg-card-subtle);
+  border: 1px solid var(--border-card);
+  color: var(--text-secondary);
+  padding: 8px 16px;
+  border-radius: 10px;
+  font-size: 0.84rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.btn-refresh:hover {
+  background: var(--pill-hover-bg);
+  border-color: var(--border-card);
+  color: var(--text-main);
+}
+
+/* Theme Toggle Button (Light/Dark Mode) */
+.btn-theme {
+  background: var(--bg-card-subtle);
+  border: 1px solid var(--border-card);
+  color: var(--text-main);
+  padding: 8px 14px;
+  border-radius: 10px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  box-shadow: var(--shadow-sm);
+}
+
+.btn-theme:hover {
+  border-color: var(--accent-primary);
+  color: var(--accent-primary);
+  transform: translateY(-1px);
+}
+
+/* ==========================================================================
+   Route Filter Pill Bar
+   ========================================================================== */
+.filter-bar-container {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  padding: 4px 0;
+}
+
+.filter-bar-label {
+  font-size: 0.74rem;
+  font-weight: 800;
+  color: var(--text-muted);
+  letter-spacing: 0.8px;
+}
+
+.route-pills {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.pill-btn {
+  background: var(--pill-bg);
+  border: 1px solid var(--pill-border);
+  color: var(--pill-text);
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: var(--shadow-sm);
+}
+
+.pill-btn:hover {
+  border-color: var(--accent-primary);
+  color: var(--accent-primary);
+  background: var(--pill-hover-bg);
+}
+
+.pill-btn.active {
+  background: var(--pill-active-bg);
+  border-color: var(--pill-active-border);
+  color: var(--pill-active-text);
+  font-weight: 700;
+  box-shadow: 0 0 10px var(--accent-glow);
+}
+
+/* ==========================================================================
+   KPI Cards Grid
+   ========================================================================== */
+.metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 16px;
+}
+
+.metric-card {
+  background: var(--bg-card);
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--border-card);
+  border-radius: 16px;
+  padding: 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  box-shadow: var(--shadow-card);
+  position: relative;
+  overflow: hidden;
+}
+
+.metric-card:hover {
+  border-color: var(--accent-primary);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-hover);
+}
+
+.metric-label {
+  font-size: 0.76rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+}
+
+.metric-value {
+  font-size: 2.2rem;
+  font-weight: 900;
+  letter-spacing: -1px;
+  font-family: var(--font-mono);
+  color: var(--text-main);
+  transition: color 0.3s ease;
+}
+
+.metric-sub {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+.text-cyan { color: var(--accent-primary) !important; }
+.text-green { color: var(--accent-emerald) !important; }
+.text-red { color: var(--accent-rose) !important; }
+.text-amber { color: var(--accent-amber) !important; }
+
+/* Number Flash Animations */
+@keyframes flashGreen {
+  0% { color: #059669; transform: scale(1.04); }
+  100% { color: inherit; transform: scale(1); }
+}
+
+@keyframes flashRed {
+  0% { color: #e11d48; transform: scale(1.04); }
+  100% { color: inherit; transform: scale(1); }
+}
+
+.flash-green { animation: flashGreen 0.8s ease-out; }
+.flash-red { animation: flashRed 0.8s ease-out; }
+
+/* ==========================================================================
+   Layout Grids & Glass Panels
+   ========================================================================== */
+.grid-2col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+@media (max-width: 1024px) {
+  .grid-2col {
+    grid-template-columns: 1fr;
+  }
+}
+
+.glass-panel {
+  background: var(--bg-card);
+  backdrop-filter: blur(14px);
+  border: 1px solid var(--border-card);
+  border-radius: 16px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  box-shadow: var(--shadow-card);
+}
+
+.panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.panel-title {
+  font-size: 1.08rem;
+  font-weight: 800;
+  color: var(--text-main);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.badge-tag {
+  background: var(--bg-card-subtle);
+  border: 1px solid var(--border-card);
+  color: var(--accent-primary);
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 0.72rem;
+  font-weight: 700;
+}
+
+.chart-container {
+  position: relative;
+  height: 320px;
+  width: 100%;
+}
+
+/* ==========================================================================
+   DGCA Basket Route Cards
+   ========================================================================== */
+.routes-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 14px;
+}
+
+.route-card {
+  background: var(--route-card-bg);
+  border: 1px solid var(--route-card-border);
+  border-radius: 14px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  cursor: pointer;
+  box-shadow: var(--shadow-sm);
+  position: relative;
+}
+
+.route-card:hover {
+  background: var(--route-card-hover);
+  border-color: var(--accent-primary);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-hover);
+}
+
+.route-card.active {
+  background: var(--route-card-active-bg);
+  border: 1.5px solid var(--route-card-active-border);
+  box-shadow: 0 0 16px var(--accent-glow);
+}
+
+.route-card.active::after {
+  content: "ACTIVE";
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: var(--accent-primary);
+  color: #ffffff;
+  font-size: 0.62rem;
+  font-weight: 800;
+  padding: 2px 6px;
+  border-radius: 6px;
+}
+
+[data-theme="dark"] .route-card.active::after {
+  color: #000000;
+}
+
+.route-code {
+  font-weight: 800;
+  font-size: 1.15rem;
+  color: var(--text-main);
+  font-family: var(--font-mono);
+}
+
+.route-weight {
+  font-size: 0.76rem;
+  color: var(--text-muted);
+}
+
+.route-index {
+  font-size: 1.35rem;
+  font-weight: 900;
+  color: var(--accent-primary);
+  font-family: var(--font-mono);
+}
+
+/* ==========================================================================
+   Data Tables & Badges
+   ========================================================================== */
+.table-responsive {
+  width: 100%;
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.84rem;
+}
+
+th {
+  text-align: left;
+  padding: 12px 14px;
+  color: var(--table-th-text);
+  font-weight: 700;
+  border-bottom: 1px solid var(--table-border);
+  text-transform: uppercase;
+  font-size: 0.72rem;
+  letter-spacing: 0.6px;
+}
+
+td {
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--table-border);
+  color: var(--text-main);
+  font-family: var(--font-mono);
+}
+
+tr:hover td {
+  background: var(--table-hover);
+}
+
+/* Provenance & Carrier Badges */
+.badge-live-tag, .badge-replay-tag, .badge-synthetic-tag {
+  font-size: 0.68rem;
+  font-weight: 800;
+  padding: 3px 8px;
+  border-radius: 6px;
+  letter-spacing: 0.5px;
+  display: inline-block;
+}
+
+.badge-live-tag {
+  background: var(--badge-live-bg);
+  color: var(--badge-live-text);
+  border: 1px solid var(--badge-live-border);
+}
+
+.badge-replay-tag {
+  background: rgba(217, 119, 6, 0.1);
+  color: var(--accent-amber);
+  border: 1px solid var(--accent-amber);
+}
+
+.badge-synthetic-tag {
+  background: rgba(147, 51, 234, 0.1);
+  color: #9333ea;
+  border: 1px solid #9333ea;
+}
+
+[data-theme="dark"] .badge-synthetic-tag {
+  color: #c084fc;
+  border-color: #c084fc;
+}
+
+.badge-carrier-indigo {
+  background: rgba(37, 99, 235, 0.1);
+  color: #2563eb;
+  border: 1px solid #2563eb;
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 6px;
+}
+
+[data-theme="dark"] .badge-carrier-indigo {
+  background: rgba(37, 99, 235, 0.2);
+  color: #60a5fa;
+  border-color: #3b82f6;
+}
+
+.badge-carrier-airindia {
+  background: rgba(225, 29, 72, 0.1);
+  color: #e11d48;
+  border: 1px solid #e11d48;
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 6px;
+}
+
+[data-theme="dark"] .badge-carrier-airindia {
+  background: rgba(225, 29, 72, 0.2);
+  color: #fb7185;
+  border-color: #f43f5e;
+}
+
+.badge-high {
+  background: var(--badge-high-bg);
+  color: var(--badge-high);
+  border: 1px solid var(--badge-high);
+  padding: 3px 8px;
+  border-radius: 8px;
+  font-size: 0.7rem;
+  font-weight: 700;
+}
+
+.badge-medium {
+  background: var(--badge-medium-bg);
+  color: var(--badge-medium);
+  border: 1px solid var(--badge-medium);
+  padding: 3px 8px;
+  border-radius: 8px;
+  font-size: 0.7rem;
+  font-weight: 700;
+}
+
+.badge-low {
+  background: var(--badge-low-bg);
+  color: var(--badge-low);
+  border: 1px solid var(--badge-low);
+  padding: 3px 8px;
+  border-radius: 8px;
+  font-size: 0.7rem;
+  font-weight: 700;
+}
+
+/* Pulses */
+.pulse-dot {
+  width: 8px;
+  height: 8px;
+  background-color: var(--accent-primary);
+  border-radius: 50%;
+  box-shadow: 0 0 10px var(--accent-primary);
+  animation: pulse 1.8s infinite;
+  display: inline-block;
+}
+
+.pulse-red {
+  background-color: var(--accent-rose);
+  box-shadow: 0 0 10px var(--accent-rose);
+  animation: pulseRed 1.6s infinite;
+}
+
+@keyframes pulse {
+  0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(37, 99, 235, 0.6); }
+  70% { transform: scale(1); box-shadow: 0 0 0 8px rgba(37, 99, 235, 0); }
+  100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(37, 99, 235, 0); }
+}
+
+@keyframes pulseRed {
+  0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(225, 29, 72, 0.6); }
+  70% { transform: scale(1); box-shadow: 0 0 0 8px rgba(225, 29, 72, 0); }
+  100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(225, 29, 72, 0); }
+}
